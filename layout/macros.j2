@@ -1,4 +1,4 @@
-{% macro render_excerpt(res, class=None) %}
+"{% macro render_excerpt(res, class=None) %}
 {% refer to res.url as post %}
 <article {{'class='~class if class }}>
 <h3><a href="{{ content_url(res.url) }}">{{ res.meta.title }}</a></h3>
@@ -38,3 +38,25 @@
 </nav>
 {%- endif %}
 {%- endmacro %}
+
+{% macro list_posts() %}
+<ul class="lf-list-titles">
+{% set sort = site.content|attr("walk_resources_sorted_by_time_")() %}
+{% for resource in sort -%}
+  <li>
+    <a href="{{ content_url(resource.url) }}" class="lf-title">{{ resource.meta.title|e }}</a>
+    {{ resource_date(resource) }}
+    {% if resource.tags %}
+    <div class="lf-tags">
+      {% for tag in resource.tags|sort %}
+      <span class="lf-sprite-tag"></span>
+      <a class="lf-tag" href="#tag-{{ tag }}">
+    {{ tag|attr("descr_")|e }}{{ tag.descr|e  }}
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </li>
+{% endfor %}
+</ul>
+{% endmacro %}

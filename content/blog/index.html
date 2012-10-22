@@ -1,6 +1,8 @@
 ---
-title: A basic blog
-extends: listing.j2
+keywords: "blog, Daniel Miller, Daniel Alan Miller, python"
 default_block: test
 listable: false
 ---
+
+
+{% set latest = site.content.walk_resources_sorted_by_time()|first %}
